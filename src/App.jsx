@@ -2,7 +2,7 @@ import Feedback from "./components/Feedback/Feedback";
 import Options from "./components/Options/Options";
 import Notification from "./components/Notification/Notification";
 import Description from "./components/Description/Description";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 function App() {
   const [feedback, setFeedback] = useState(() => {
     const feedbackFromLocalStorage = window.localStorage.getItem("feedback");
@@ -33,6 +33,10 @@ function App() {
   const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
   const positiveFeedbackPercentage =
     totalFeedback > 0 ? Math.round((feedback.good / totalFeedback) * 100) : 0;
+
+  useEffect(() => {
+    window.localStorage.setItem("feedback", JSON.stringify(feedback));
+  }, [feedback]);
   return (
     <>
       <Description />
